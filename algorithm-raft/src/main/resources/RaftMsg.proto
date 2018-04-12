@@ -1,0 +1,25 @@
+package cn.larry.algorithm.raft.proto;
+
+//leader 向 folower發送 appendEntryRPC 請求的數據
+message AppendEntryReq{
+required uint32 term=1;
+required uint32 leaderId=2;
+required uint32 prevLogIndex=3;
+required uint32 prevLogTerm=4;
+repeated LogEntry logEntries=5;
+required uint32 LeaderCommit=6;
+}
+
+message AppendEntryRsp{
+required uint32 term=1;
+required bool   success=2;
+}
+
+//
+message LogEntry{
+required uint32 index;
+required uint32 term;
+required unit32 opType = 1;
+required string key = 2 ;
+optional string value = 3;
+}
