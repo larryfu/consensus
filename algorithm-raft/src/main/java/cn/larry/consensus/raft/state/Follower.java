@@ -3,9 +3,9 @@ package cn.larry.consensus.raft.state;
 import cn.larry.consensus.raft.ServerState;
 import cn.larry.consensus.raft.msg.*;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Follower {
 
@@ -13,16 +13,35 @@ public class Follower {
 
     private long lastLeaderMsg = 0;  //上一次和Leader通信时间
 
-    private int timeout; //Leader超时时间
+    private int timeoutSeconds; //Leader超时时间
 
     private static ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
 
 
-    public Follower(ServerState serverState,int timeout) {
+    public Follower(final ServerState serverState, int timeoutSeconds) {
         this.lastLeaderMsg = System.currentTimeMillis();
         this.serverState = serverState;
-        this.timeout = timeout;
+        this.timeoutSeconds = timeoutSeconds;
+        scheduledExecutorService.schedule(new Runnable() {
+            public void run() {
+               checkLeaderTimeout();
+            }
+        }, timeoutSeconds, TimeUnit.SECONDS);
+    }
+
+    private void  checkLeaderTimeout(){
+        if(serverState.isFollower()){
+           if(System.currentTimeMillis() - lastLeaderMsg > timeoutSeconds *1000){
+               serverState.getServer().putMessage(new ConvertStatusMessage(ServerState.ServerStatus.FOLLOWER));
+           }else {
+               scheduledExecutorService.schedule(new Runnable() {
+                   public void run() {
+                       checkLeaderTimeout();
+                   }
+               }, timeoutSeconds, TimeUnit.SECONDS);
+           }
+        }
     }
 
 
@@ -32,26 +51,26 @@ public class Follower {
      * @param appendEntry
      * @return
      */
-    private AppednEntryRsp onAppendEntry(AppendEntry appendEntry) {
+    public AppendEntryRsp onAppendEntry(AppendEntry appendEntry) {
         this.lastLeaderMsg = System.currentTimeMillis();
         if (serverState.getCurrentTerm() > appendEntry.getTerm()) {
-            return new AppednEntryRsp(serverState.getCurrentTerm(), false);
+            return new AppendEntryRsp(serverState.getCurrentTerm(), false);
         }
         if (serverState.getCurrentTerm() < appendEntry.getTerm()) {
             serverState.setCurrentTerm(appendEntry.getTerm());
         }
         if (serverState.getLogs().getLastLogindex() < appendEntry.getPreLogIndex()) {
-            return new AppednEntryRsp(serverState.getCurrentTerm(), false);
+            return new AppendEntryRsp(serverState.getCurrentTerm(), false);
         } else {
             LogEntry logEntry = serverState.getLogs().getLogTerm(appendEntry.getPreLogIndex());
             if (logEntry == null) {
 
             }
             if (logEntry.getTerm() != appendEntry.getPreLogTerm()) {
-                return new AppednEntryRsp(serverState.getCurrentTerm(), false);
+                return new AppendEntryRsp(serverState.getCurrentTerm(), false);
             }
             serverState.applyLog(appendEntry);
-            return new AppednEntryRsp(serverState.getCurrentTerm(), true);
+            return new AppendEntryRsp(serverState.getCurrentTerm(), true);
         }
     }
 
@@ -61,7 +80,7 @@ public class Follower {
      * @param requestVote
      * @return
      */
-    private RequestVoteRsp onRequestVote(RequestVote requestVote) {
+    public RequestVoteRsp onRequestVote(RequestVote requestVote) {
         if (serverState.getCurrentTerm() > requestVote.getTerm()) {
             return new RequestVoteRsp(serverState.getCurrentTerm(), false);
         }

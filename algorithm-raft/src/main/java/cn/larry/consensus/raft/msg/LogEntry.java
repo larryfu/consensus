@@ -1,6 +1,6 @@
 package cn.larry.consensus.raft.msg;
 
-public class LogEntry {
+public class LogEntry  {
     long term;
     long index;
     String command;

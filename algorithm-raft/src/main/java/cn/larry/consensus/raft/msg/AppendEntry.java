@@ -2,7 +2,7 @@ package cn.larry.consensus.raft.msg;
 
 import java.util.List;
 
-public class AppendEntry {
+public class AppendEntry extends Message {
     long term;
     int leaderId;
     long preLogIndex;

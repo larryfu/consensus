@@ -1,6 +1,6 @@
 package cn.larry.consensus.raft.msg;
 
-public class RequestVote {
+public class RequestVote extends Message {
     long term;
     int candidateId;
     long lastLogIndex;

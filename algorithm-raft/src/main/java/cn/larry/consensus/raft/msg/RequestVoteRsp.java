@@ -1,6 +1,6 @@
 package cn.larry.consensus.raft.msg;
 
-public class RequestVoteRsp {
+public class RequestVoteRsp extends Message {
     long term;
     boolean voteGranted;
 
