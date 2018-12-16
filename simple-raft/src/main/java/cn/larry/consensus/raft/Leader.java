@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 public class Leader {
 
     private RaftAlgorithm serverState;
-    private  Logger logger = LogManager.getLogger("StateFlow");
+    private Logger logger = LogManager.getLogger("StateFlow");
 
     Map<Integer, Long> nextIndexMap = new ConcurrentHashMap<>();
     Map<Integer, Long> matchIndexMap = new ConcurrentHashMap<>();
@@ -27,7 +27,7 @@ public class Leader {
 
     ScheduledExecutorService scheduledExecutorService;
 
-    private int heartbeat;
+    private int heartbeat = 5;
 
     public Leader(RaftAlgorithm serverState) {
         this.serverState = serverState;
@@ -55,26 +55,28 @@ public class Leader {
         this.executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors() + 1);
         this.scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
         this.serverState.incrCurrentTerm();
-        this.serverState.getClusterServers();
-        scheduledExecutorService.schedule(new Runnable() {
+        heartbeatMap.clear();
+        scheduledExecutorService.execute(new Runnable() {
             @Override
             public void run() {
                 keepHeatBeat();
             }
-        }, heartbeat, TimeUnit.SECONDS);
+        });
     }
+
 
     /**
      * 发送心跳appendEntry
      */
     private void keepHeatBeat() {
+        logger.debug("keep heart beat");
         if (serverState.isLeader()) {
             for (ServerInfo serverInfo : serverState.getClusterServers()) {
-                long lastHeartbeat = heartbeatMap.get(serverInfo.getServerId());
+                Long lastHeartbeat = heartbeatMap.get(serverInfo.getServerId());
+                if (lastHeartbeat == null) lastHeartbeat = 0L;
                 if (System.currentTimeMillis() - lastHeartbeat >= heartbeat * 1000) {
                     sendAppendEntryToFollower(serverInfo);
                 }
-
             }
             scheduledExecutorService.schedule(new Runnable() {
                 @Override
@@ -90,18 +92,28 @@ public class Leader {
         if (serverInfo.getServerId() == serverState.getThisServer().getServerId())
             return;
         //向follower发送log entry
-        long matchIndex = matchIndexMap.get(serverInfo.getServerId());
-        long nextIndex = nextIndexMap.get(serverInfo.getServerId());
-        LogEntry preEntry = serverState.getLogs().getLogEntry(matchIndex);
+        Long matchIndex = matchIndexMap.get(serverInfo.getServerId());
         AppendEntry appendEntry = new AppendEntry();
-        appendEntry.setPreLogTerm(preEntry.getTerm());
-        appendEntry.setPreLogIndex(preEntry.getIndex());
+        Long nextIndex = nextIndexMap.get(serverInfo.getServerId());
+        if (matchIndex == null) { //没有匹配记录,leader和follower第一次同步日志
+            matchIndex = serverState.getLogs().getLastLogindex();
+            nextIndex = matchIndex + 1;
+        }
+        LogEntry preEntry = serverState.getLogs().getLogEntry(matchIndex);
+        if(preEntry == null){ //找不到pre logEntry设置为0，
+            appendEntry.setPreLogTerm(0L);
+            appendEntry.setPreLogIndex(0L);
+        }else {
+            appendEntry.setPreLogTerm(preEntry.getTerm());
+            appendEntry.setPreLogIndex(preEntry.getIndex());
+        }
+
         appendEntry.setTo(serverInfo.getServerName());
         appendEntry.setFrom(serverState.getThisServer().getServerName());
         appendEntry.setTerm(serverState.currentTerm);
         appendEntry.setLeaderId(serverState.getThisServer().getServerId());
         appendEntry.setLeaderCommit(serverState.getCommitIndex());
-        List<LogEntry> entries = serverState.getLogs().getLogByRange(nextIndex, serverState.getLogs().getStartIndex());
+        List<LogEntry> entries = serverState.getLogs().getLogByRange(nextIndex, serverState.getLogs().getLastLogindex());
         appendEntry.setEntries(entries);
         serverState.sendMessage(appendEntry);
     }
@@ -113,7 +125,7 @@ public class Leader {
      * @throws InterruptedException
      */
     public void onClientRequest(ClientRequest request) {
-        LogEntry.Builder entry  = LogEntry.newBuilder();
+        LogEntry.Builder entry = LogEntry.newBuilder();
         entry.setTerm(serverState.currentTerm);
         entry.setIndex(serverState.getLogs().getLastLogindex() + 1);
         entry.setCommand(request.getCommand());
@@ -125,7 +137,7 @@ public class Leader {
         logCallBacks.get(entry.getIndex()).add(new Runnable() {
             @Override
             public void run() {
-                Consumer runnable = serverState.getMsgCallBack().get(request.getMsgId());
+                Consumer runnable = serverState.getMsgCallBack().remove(request.getMsgId());
                 if (runnable != null) {
                     /**
                      * 客户端请求处理成功，回调回复客户端
@@ -144,9 +156,7 @@ public class Leader {
      * @param rsp
      */
     public Msg onAppendEntryRsp(AppendEntryRsp rsp) {
-
         ServerInfo fromServer = null;
-
         for (ServerInfo server : serverState.getClusterServers()) {
             if (server.getServerName().equals(rsp.getFrom())) {
                 fromServer = server;
@@ -174,12 +184,15 @@ public class Leader {
             appendEntry.setLeaderId(serverState.getThisServer().getServerId());
             appendEntry.setTerm(serverState.currentTerm);
             LogEntry entry = serverState.getLogs().getLogEntry(rsp.getRequest().getPreLogIndex());
-            LogEntry preEntry = serverState.getLogs().getPreLogEntry(rsp.getRequest().getPreLogIndex());
-            if (preEntry == null || entry == null) {
+            LogEntry preEntry = null;
+            if(entry != null){
+               preEntry =  serverState.getLogs().getPreLogEntry(rsp.getRequest().getPreLogIndex());
+            }
+            if ( entry == null || preEntry == null ) {
                 //回退到达起点,强制follower全量替换日志
                 appendEntry.setAllReplace(true);
-                appendEntry.setPreLogIndex(rsp.getRequest().getPreLogIndex());
-                appendEntry.setPreLogTerm(rsp.getRequest().getPreLogTerm());
+                appendEntry.setPreLogIndex(0L);
+                appendEntry.setPreLogTerm(0L);
             } else {
                 appendEntry.setPreLogIndex(preEntry.getIndex());
                 appendEntry.setPreLogTerm(preEntry.getTerm());
@@ -219,19 +232,18 @@ public class Leader {
      * @param index
      */
     private void logCommitted(long index) {
-        List<Runnable> runnables = logCallBacks.get(index);
+        List<Runnable> runnables = logCallBacks.remove(index);
         if (runnables != null) {
             for (Runnable runnable : runnables)
                 executorService.submit(runnable);
         }
-        logCallBacks.remove(index);
     }
 
 
     public RequestVoteRsp onRequestVote(RequestVote requestVote) {
 
         if (requestVote.getTerm() <= serverState.currentTerm) {
-            return new RequestVoteRsp(serverState.currentTerm, false,requestVote);
+            return new RequestVoteRsp(serverState.currentTerm, false, requestVote);
         } else {
             this.serverState.convertToFollower(requestVote.getTerm(), 0);
             return null;
@@ -244,7 +256,7 @@ public class Leader {
             return new AppendEntryRsp(serverState.currentTerm, false, appendEntry);
         } else {
             serverState.convertToFollower(appendEntry.getTerm(), appendEntry.getLeaderId());
-            this.serverState.putMessage(appendEntry,null);
+            this.serverState.putMessage(appendEntry, null);
             return null;
         }
     }

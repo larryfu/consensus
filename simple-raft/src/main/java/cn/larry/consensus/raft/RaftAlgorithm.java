@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 public class RaftAlgorithm implements Runnable {
 
 
-    private  Logger logger = LogManager.getLogger("StateFlow");
+    private Logger logger = LogManager.getLogger("StateFlow");
 
     private MessageSender messageSender;
 
@@ -68,8 +68,8 @@ public class RaftAlgorithm implements Runnable {
             try {
                 logger.debug("poll msg from queue");
                 Msg msg = msgQueue.poll(10, TimeUnit.SECONDS);
-                logger.debug("poll msg result:{}",msg);
-                if(msg == null)
+                logger.debug("poll msg result:{}", msg);
+                if (msg == null)
                     continue;
                 Msg result = null;
                 if (isLeader()) {
@@ -93,32 +93,33 @@ public class RaftAlgorithm implements Runnable {
 
     /**
      * 向其他server发送消息，消息目的地址写在msg里
+     *
      * @param msg
      */
     public void sendMessage(Msg msg) {
-        logger.debug("send msg :{}",msg);
+        logger.debug("send msg :{}", msg);
         messageSender.sendMessage(msg, new Consumer<Msg>() {
             @Override
             public void accept(Msg msg) {
-                  putMessage(msg,null);
+                putMessage(msg, null);
             }
         });
         logger.debug("send msg finish");
     }
 
     private Msg candidateHandleMessage(Msg msg) {
-        logger.debug("candidate handle msg:{}",msg);
+        logger.debug("candidate handle msg:{}", msg);
         Msg result = null;
         if (msg instanceof AppendEntry) {
             result = candidate.onAppendEntry((AppendEntry) msg);
         } else if (msg instanceof RequestVote) {
             result = candidate.onRequestVote((RequestVote) msg);
         } else if (msg instanceof RequestVoteRsp) {
-             candidate.onRequestVoteRsp((RequestVoteRsp) msg);
-        }else if(msg instanceof RestartCandidateMsg){
-            candidate.onRestartCandidate((RestartCandidateMsg)msg);
-        }else {
-            logger.error("candidate can not handel msg:{}",msg);
+            candidate.onRequestVoteRsp((RequestVoteRsp) msg);
+        } else if (msg instanceof RestartCandidateMsg) {
+            candidate.onRestartCandidate((RestartCandidateMsg) msg);
+        } else {
+            logger.error("candidate can not handel msg:{}", msg);
         }
         //TODO complete logic
         return result;
@@ -126,20 +127,21 @@ public class RaftAlgorithm implements Runnable {
 
 
     private Msg followerHandleMessage(Msg msg) {
-        logger.debug("follower handle msg:{}",msg);
+        logger.debug("follower handle msg:{}", msg);
+        Msg rsp = null;
         if (msg instanceof AppendEntry) {
-            getFollower().onAppendEntry((AppendEntry) msg);
+            rsp = getFollower().onAppendEntry((AppendEntry) msg);
         } else if (msg instanceof RequestVote) {
-            getFollower().onRequestVote((RequestVote) msg);
+            rsp = getFollower().onRequestVote((RequestVote) msg);
         } else {
             logger.error("follower can not handle message ignore , " + msg.getClass().getCanonicalName());
         }
         //TODO complete logic
-        return null;
+        return rsp;
     }
 
     private Msg leaderHandleMessage(Msg msg) {
-        logger.debug("leader handle msg:{}",msg);
+        logger.debug("leader handle msg:{}", msg);
         if (msg instanceof AppendEntry) {
             return leader.onAppendEntry((AppendEntry) msg);
         } else if (msg instanceof RequestVote) {
@@ -149,8 +151,8 @@ public class RaftAlgorithm implements Runnable {
             return null;
         } else if (msg instanceof ClientRequest) {
             leader.onClientRequest((ClientRequest) msg);
-        }else {
-            logger.error("leader can not handle msg:{}",msg);
+        } else {
+            logger.error("leader can not handle msg:{}", msg);
         }
         //TODO complete logic
         return null;
@@ -162,7 +164,7 @@ public class RaftAlgorithm implements Runnable {
         this.currentState = ServerStatus.CANDIDATE;
         thisServer = self;
         this.leader = new Leader(this);
-        this.follower = new Follower(this, 10);
+        this.follower = new Follower(this, 15);
         this.candidate = new Candidate(this);
         this.messageSender = messageSender;
         this.logs = new Logs();
@@ -171,9 +173,23 @@ public class RaftAlgorithm implements Runnable {
     }
 
     public void applyLog(AppendEntry appendEntry) {
-        for (int index = 1; index < appendEntry.getEntries().size(); index++) {
-            logs.getLogEntries().set(index + (int) (appendEntry.getPreLogIndex() - logs.getLastLogindex()), appendEntry.getEntries().get(index));
+
+        if (appendEntry.getPreLogIndex() == 0) {  // preLogIndex 为0 执行全量替换
+            logs.getLogEntries().clear();
+        }else {
+            int appendStart = 0;
+            for (int i = 0; i < logs.getLogEntries().size(); i++) { //找到匹配位置
+                if (logs.getLogEntries().get(i).getIndex() == appendEntry.getPreLogIndex()) {
+                    appendStart = i;
+                }
+            }
+            //移除掉匹配位置后的日志
+            for (int index = logs.getLogEntries().size(); index > appendStart; index--) {
+                logs.getLogEntries().remove(index);
+            }
         }
+        //添加leader的日志
+        logs.getLogEntries().addAll(appendEntry.getEntries());
         commitIndex = Math.min(appendEntry.getLeaderCommit(), logs.getLastLogindex());
     }
 
@@ -191,7 +207,7 @@ public class RaftAlgorithm implements Runnable {
 
 
     public void convertToFollower(long term, int leader) {
-        logger.debug("convert to follower cur stat:{}",getCurrentState());
+        logger.debug("convert to follower cur stat:{}", getCurrentState());
         if (term < currentTerm)
             return;
         currentTerm = term;
@@ -205,7 +221,7 @@ public class RaftAlgorithm implements Runnable {
     public void convertToLeader() {
         //  if (isLeader())
         //       return;
-        logger.debug("convert to leader cur stat:{}",getCurrentState());
+        logger.debug("convert to leader cur stat:{}", getCurrentState());
         this.currentState = ServerStatus.LEADER;
         this.thisServer.setState(ServerStatus.LEADER);
         this.leader.init();
@@ -223,7 +239,7 @@ public class RaftAlgorithm implements Runnable {
         //    if (isCandidate())
         //        return;
         //   if (isFollower()) {  //从follower切换到candidate
-        logger.debug("convert to candidate cur stat:{}",getCurrentState());
+        logger.debug("convert to candidate cur stat:{}", getCurrentState());
         this.currentState = ServerStatus.CANDIDATE;
         this.thisServer.setState(ServerStatus.CANDIDATE);
         this.candidate.init();

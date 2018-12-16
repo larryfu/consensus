@@ -30,11 +30,15 @@ public class Logs {
     }
 
     public long getLastLogindex() {
-        return getLastEntry().getIndex();
+        LogEntry entry = getLastEntry();
+        if(entry == null){
+            return 0L;
+        }
+        return entry.getIndex();
     }
 
     public LogEntry getLogEntry(long index) {
-        if (index > getLastLogindex() || index < startIndex) {
+        if (logEntries.size() == 0 || index > getLastLogindex() || index < startIndex) {
             return null;
         } else {
             for (int i = logEntries.size() - 1; i >= 0; i--) { //向前遍历找到匹配的index，同一Term内index是连续的
@@ -46,7 +50,8 @@ public class Logs {
     }
 
     public List<LogEntry> getLogByRange(long startIndex, long endIndex) {
-        if (startIndex > getLastLogindex())
+
+        if (logEntries.size() == 0 ||startIndex > getLastLogindex())
             return new ArrayList<>();
         int start = -1;
         for (int i = logEntries.size() - 1; i >= 0; i--) { //向前遍历找到匹配的index，同一Term内index是连续的

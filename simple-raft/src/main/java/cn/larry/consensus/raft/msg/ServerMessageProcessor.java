@@ -98,6 +98,7 @@ public class ServerMessageProcessor implements CommMessageProcessor {
         raftAlgorithm.putMessage(requestVote, new Consumer() {
             @Override
             public void accept(Object o) {
+                logger.debug("msgId:{} object:{}",requestVote.msgId,o);
                 processResult.put(requestVote.msgId, o);
                 latch.countDown();
             }

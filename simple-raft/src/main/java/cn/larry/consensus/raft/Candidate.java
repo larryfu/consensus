@@ -100,16 +100,18 @@ public class Candidate {
      * @param requestVote
      */
     public RequestVoteRsp onRequestVote(RequestVote requestVote) {
-        logger.debug("handle RequestVote :{}",requestVote);
-        if (requestVote.getTerm() > serverState.getCurrentTerm()) {
-            serverState.convertToFollower(requestVote.getTerm(), 0);
-            serverState.putMessage(requestVote,null);
-            return null;
+        logger.debug("********************receive RequestVote :{}",requestVote);
+        if (requestVote.getTerm() > serverState.getCurrentTerm()) { //自己term小于requestVote，更新term并投票给请求者
+            serverState.setCurrentTerm(requestVote.getTerm());
+            this.receivedRsp.clear();
+            serverState.setVoteFor(requestVote.getCandidateId());
+            return new RequestVoteRsp(serverState.currentTerm, true,requestVote);
         } else if (requestVote.getTerm() < serverState.getCurrentTerm()) {
             return new RequestVoteRsp(serverState.currentTerm, false,requestVote);
         } else if (serverState.getVoteFor() > 0 && serverState.getVoteFor() != requestVote.getCandidateId()) {
             return new RequestVoteRsp(serverState.currentTerm, false,requestVote);
         } else {
+            serverState.setVoteFor(requestVote.getCandidateId());
             return new RequestVoteRsp(serverState.currentTerm, true,requestVote);
         }
     }
@@ -124,6 +126,7 @@ public class Candidate {
         logger.debug("handle RequestVoteRsp :{}",requestVoteRsp);
         this.receivedRsp.add(requestVoteRsp);
         if (requestVoteRsp.isVoteGranted()) {
+            logger.debug("***********************received vote from :{}",requestVoteRsp.getFrom());
             int supporter = 0;
             for (RequestVoteRsp rsp : receivedRsp) {
                 if (rsp.isVoteGranted()) supporter++;
@@ -131,6 +134,8 @@ public class Candidate {
             if (supporter > serverState.getClusterServers().size() / 2) {
                 serverState.convertToLeader();
             }
+        }else if(requestVoteRsp.getTerm() > serverState.getCurrentTerm()){
+
         }
 
     }

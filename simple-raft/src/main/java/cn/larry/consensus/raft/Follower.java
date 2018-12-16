@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Follower {
 
-    private  Logger logger = LogManager.getLogger("StateFlow");
+    private Logger logger = LogManager.getLogger("StateFlow");
 
     private RaftAlgorithm serverState;
 
@@ -43,7 +43,7 @@ public class Follower {
     private void checkLeaderTimeout() {
         if (serverState.isFollower()) {
             if (System.currentTimeMillis() - lastLeaderMsg > timeoutSeconds * 1000) {
-                serverState.putMessage(new ConvertStatusMsg(RaftAlgorithm.ServerStatus.CANDIDATE),null);
+                serverState.putMessage(new ConvertStatusMsg(RaftAlgorithm.ServerStatus.CANDIDATE), null);
             } else {
                 scheduledExecutorService.schedule(new Runnable() {
                     public void run() {
@@ -62,26 +62,26 @@ public class Follower {
      * @return
      */
     public AppendEntryRsp onAppendEntry(AppendEntry appendEntry) {
-        if (serverState.getCurrentTerm() > appendEntry.getTerm()) {
-            return new AppendEntryRsp(serverState.getCurrentTerm(), false,appendEntry);
+        if (serverState.getCurrentTerm() > appendEntry.getTerm()) { //leader已过时
+            return new AppendEntryRsp(serverState.getCurrentTerm(), false, appendEntry);
         }
         this.lastLeaderMsg = System.currentTimeMillis();
-        if (serverState.getCurrentTerm() < appendEntry.getTerm()) {
+        if (serverState.getCurrentTerm() < appendEntry.getTerm()) { //更新当前term
             serverState.setCurrentTerm(appendEntry.getTerm());
         }
-        if (serverState.getLogs().getLastLogindex() < appendEntry.getPreLogIndex()) {
-            return new AppendEntryRsp(serverState.getCurrentTerm(), false,appendEntry);
-        } else {
-            CommProtocolProto.LogEntry logEntry = serverState.getLogs().getLogEntry(appendEntry.getPreLogIndex());
-            if (logEntry == null) {
-
-            }
-            if (logEntry.getTerm() != appendEntry.getPreLogTerm()) {
-                return new AppendEntryRsp(serverState.getCurrentTerm(), false,appendEntry);
-            }
-            serverState.applyLog(appendEntry);
-            return new AppendEntryRsp(serverState.getCurrentTerm(), true,appendEntry);
+        if (appendEntry.getLeaderCommit() == 0) { //leader还没有提交日志
+            return new AppendEntryRsp(serverState.getCurrentTerm(), true, appendEntry);
         }
+        if (appendEntry.getPreLogIndex() == 0) { //
+            serverState.applyLog(appendEntry);
+            return new AppendEntryRsp(serverState.getCurrentTerm(), true, appendEntry);
+        }
+        CommProtocolProto.LogEntry logEntry = serverState.getLogs().getLogEntry(appendEntry.getPreLogIndex());
+        if (logEntry == null || logEntry.getTerm() != appendEntry.getPreLogTerm()) { //没有找到preloginex的日志，或者与leader的不匹配
+            return new AppendEntryRsp(serverState.getCurrentTerm(), false, appendEntry);
+        }
+        serverState.applyLog(appendEntry);
+        return new AppendEntryRsp(serverState.getCurrentTerm(), true, appendEntry);
     }
 
     /**
@@ -92,7 +92,7 @@ public class Follower {
      */
     public RequestVoteRsp onRequestVote(RequestVote requestVote) {
         if (serverState.getCurrentTerm() > requestVote.getTerm()) {
-            return new RequestVoteRsp(serverState.getCurrentTerm(), false,requestVote);
+            return new RequestVoteRsp(serverState.getCurrentTerm(), false, requestVote);
         }
         if (serverState.getCurrentTerm() < requestVote.getTerm()) {
             serverState.setCurrentTerm(requestVote.getTerm());
@@ -102,9 +102,9 @@ public class Follower {
         long lastterm = lastEntry != null ? lastEntry.getTerm() : serverState.getLogs().getStartTerm();
         if (requestVote.getLastLogTerm() >= lastterm && requestVote.getLastLogIndex() >= lastIndex) {
             serverState.setVoteFor(requestVote.getCandidateId());
-            return new RequestVoteRsp(serverState.getCurrentTerm(), true,requestVote);
+            return new RequestVoteRsp(serverState.getCurrentTerm(), true, requestVote);
         } else {
-            return new RequestVoteRsp(serverState.getCurrentTerm(), false,requestVote);
+            return new RequestVoteRsp(serverState.getCurrentTerm(), false, requestVote);
         }
     }
 
