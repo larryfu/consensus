@@ -64,4 +64,15 @@ message LogEntry {
     string command = 3;
 }
 
+message ClientRequest{
+    string command = 1;
+}
+
+message ClientResponse{
+    uint32 retcode = 1;
+    string msg = 2 ;
+    string leader = 3;
+    uint32 leaderPort = 4;
+}
+
 

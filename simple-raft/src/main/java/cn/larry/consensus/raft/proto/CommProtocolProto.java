@@ -2023,54 +2023,97 @@ public final class CommProtocolProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * leader的term
+     * </pre>
+     *
      * <code>uint64 term = 1;</code>
      */
     long getTerm();
 
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>uint32 leaderId = 2;</code>
      */
     int getLeaderId();
 
     /**
+     * <pre>
+     *前一个logEntry的index
+     * </pre>
+     *
      * <code>uint64 preLogIndex = 3;</code>
      */
     long getPreLogIndex();
 
     /**
+     * <pre>
+     *前一个logEntry的term
+     * </pre>
+     *
      * <code>uint64 preLogTerm = 4;</code>
      */
     long getPreLogTerm();
 
     /**
+     * <pre>
+     *leader 的commitIndex
+     * </pre>
+     *
      * <code>uint64 leaderCommit = 5;</code>
      */
     long getLeaderCommit();
 
     /**
+     * <pre>
+     *是否全量替换
+     * </pre>
+     *
      * <code>bool allReplace = 6;</code>
      */
     boolean getAllReplace();
 
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     java.util.List<cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry> 
         getEntriesList();
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry getEntries(int index);
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     int getEntriesCount();
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     java.util.List<? extends cn.larry.consensus.raft.proto.CommProtocolProto.LogEntryOrBuilder> 
         getEntriesOrBuilderList();
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     cn.larry.consensus.raft.proto.CommProtocolProto.LogEntryOrBuilder getEntriesOrBuilder(
@@ -2200,6 +2243,10 @@ public final class CommProtocolProto {
     public static final int TERM_FIELD_NUMBER = 1;
     private long term_;
     /**
+     * <pre>
+     * leader的term
+     * </pre>
+     *
      * <code>uint64 term = 1;</code>
      */
     public long getTerm() {
@@ -2209,6 +2256,9 @@ public final class CommProtocolProto {
     public static final int LEADERID_FIELD_NUMBER = 2;
     private int leaderId_;
     /**
+     * <pre>
+     * </pre>
+     *
      * <code>uint32 leaderId = 2;</code>
      */
     public int getLeaderId() {
@@ -2218,6 +2268,10 @@ public final class CommProtocolProto {
     public static final int PRELOGINDEX_FIELD_NUMBER = 3;
     private long preLogIndex_;
     /**
+     * <pre>
+     *前一个logEntry的index
+     * </pre>
+     *
      * <code>uint64 preLogIndex = 3;</code>
      */
     public long getPreLogIndex() {
@@ -2227,6 +2281,10 @@ public final class CommProtocolProto {
     public static final int PRELOGTERM_FIELD_NUMBER = 4;
     private long preLogTerm_;
     /**
+     * <pre>
+     *前一个logEntry的term
+     * </pre>
+     *
      * <code>uint64 preLogTerm = 4;</code>
      */
     public long getPreLogTerm() {
@@ -2236,6 +2294,10 @@ public final class CommProtocolProto {
     public static final int LEADERCOMMIT_FIELD_NUMBER = 5;
     private long leaderCommit_;
     /**
+     * <pre>
+     *leader 的commitIndex
+     * </pre>
+     *
      * <code>uint64 leaderCommit = 5;</code>
      */
     public long getLeaderCommit() {
@@ -2245,6 +2307,10 @@ public final class CommProtocolProto {
     public static final int ALLREPLACE_FIELD_NUMBER = 6;
     private boolean allReplace_;
     /**
+     * <pre>
+     *是否全量替换
+     * </pre>
+     *
      * <code>bool allReplace = 6;</code>
      */
     public boolean getAllReplace() {
@@ -2254,12 +2320,20 @@ public final class CommProtocolProto {
     public static final int ENTRIES_FIELD_NUMBER = 7;
     private java.util.List<cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry> entries_;
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     public java.util.List<cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry> getEntriesList() {
       return entries_;
     }
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     public java.util.List<? extends cn.larry.consensus.raft.proto.CommProtocolProto.LogEntryOrBuilder> 
@@ -2267,18 +2341,30 @@ public final class CommProtocolProto {
       return entries_;
     }
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     public int getEntriesCount() {
       return entries_.size();
     }
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     public cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry getEntries(int index) {
       return entries_.get(index);
     }
     /**
+     * <pre>
+     *需存储的日志
+     * </pre>
+     *
      * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
      */
     public cn.larry.consensus.raft.proto.CommProtocolProto.LogEntryOrBuilder getEntriesOrBuilder(
@@ -2740,12 +2826,20 @@ public final class CommProtocolProto {
 
       private long term_ ;
       /**
+       * <pre>
+       * leader的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public long getTerm() {
         return term_;
       }
       /**
+       * <pre>
+       * leader的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public Builder setTerm(long value) {
@@ -2755,6 +2849,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       * leader的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public Builder clearTerm() {
@@ -2766,12 +2864,18 @@ public final class CommProtocolProto {
 
       private int leaderId_ ;
       /**
+       * <pre>
+       * </pre>
+       *
        * <code>uint32 leaderId = 2;</code>
        */
       public int getLeaderId() {
         return leaderId_;
       }
       /**
+       * <pre>
+       * </pre>
+       *
        * <code>uint32 leaderId = 2;</code>
        */
       public Builder setLeaderId(int value) {
@@ -2781,6 +2885,9 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       * </pre>
+       *
        * <code>uint32 leaderId = 2;</code>
        */
       public Builder clearLeaderId() {
@@ -2792,12 +2899,20 @@ public final class CommProtocolProto {
 
       private long preLogIndex_ ;
       /**
+       * <pre>
+       *前一个logEntry的index
+       * </pre>
+       *
        * <code>uint64 preLogIndex = 3;</code>
        */
       public long getPreLogIndex() {
         return preLogIndex_;
       }
       /**
+       * <pre>
+       *前一个logEntry的index
+       * </pre>
+       *
        * <code>uint64 preLogIndex = 3;</code>
        */
       public Builder setPreLogIndex(long value) {
@@ -2807,6 +2922,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *前一个logEntry的index
+       * </pre>
+       *
        * <code>uint64 preLogIndex = 3;</code>
        */
       public Builder clearPreLogIndex() {
@@ -2818,12 +2937,20 @@ public final class CommProtocolProto {
 
       private long preLogTerm_ ;
       /**
+       * <pre>
+       *前一个logEntry的term
+       * </pre>
+       *
        * <code>uint64 preLogTerm = 4;</code>
        */
       public long getPreLogTerm() {
         return preLogTerm_;
       }
       /**
+       * <pre>
+       *前一个logEntry的term
+       * </pre>
+       *
        * <code>uint64 preLogTerm = 4;</code>
        */
       public Builder setPreLogTerm(long value) {
@@ -2833,6 +2960,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *前一个logEntry的term
+       * </pre>
+       *
        * <code>uint64 preLogTerm = 4;</code>
        */
       public Builder clearPreLogTerm() {
@@ -2844,12 +2975,20 @@ public final class CommProtocolProto {
 
       private long leaderCommit_ ;
       /**
+       * <pre>
+       *leader 的commitIndex
+       * </pre>
+       *
        * <code>uint64 leaderCommit = 5;</code>
        */
       public long getLeaderCommit() {
         return leaderCommit_;
       }
       /**
+       * <pre>
+       *leader 的commitIndex
+       * </pre>
+       *
        * <code>uint64 leaderCommit = 5;</code>
        */
       public Builder setLeaderCommit(long value) {
@@ -2859,6 +2998,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *leader 的commitIndex
+       * </pre>
+       *
        * <code>uint64 leaderCommit = 5;</code>
        */
       public Builder clearLeaderCommit() {
@@ -2870,12 +3013,20 @@ public final class CommProtocolProto {
 
       private boolean allReplace_ ;
       /**
+       * <pre>
+       *是否全量替换
+       * </pre>
+       *
        * <code>bool allReplace = 6;</code>
        */
       public boolean getAllReplace() {
         return allReplace_;
       }
       /**
+       * <pre>
+       *是否全量替换
+       * </pre>
+       *
        * <code>bool allReplace = 6;</code>
        */
       public Builder setAllReplace(boolean value) {
@@ -2885,6 +3036,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *是否全量替换
+       * </pre>
+       *
        * <code>bool allReplace = 6;</code>
        */
       public Builder clearAllReplace() {
@@ -2907,6 +3062,10 @@ public final class CommProtocolProto {
           cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry, cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry.Builder, cn.larry.consensus.raft.proto.CommProtocolProto.LogEntryOrBuilder> entriesBuilder_;
 
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public java.util.List<cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry> getEntriesList() {
@@ -2917,6 +3076,10 @@ public final class CommProtocolProto {
         }
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public int getEntriesCount() {
@@ -2927,6 +3090,10 @@ public final class CommProtocolProto {
         }
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry getEntries(int index) {
@@ -2937,6 +3104,10 @@ public final class CommProtocolProto {
         }
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder setEntries(
@@ -2954,6 +3125,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder setEntries(
@@ -2968,6 +3143,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder addEntries(cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry value) {
@@ -2984,6 +3163,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder addEntries(
@@ -3001,6 +3184,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder addEntries(
@@ -3015,6 +3202,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder addEntries(
@@ -3029,6 +3220,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder addAllEntries(
@@ -3044,6 +3239,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder clearEntries() {
@@ -3057,6 +3256,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public Builder removeEntries(int index) {
@@ -3070,6 +3273,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry.Builder getEntriesBuilder(
@@ -3077,6 +3284,10 @@ public final class CommProtocolProto {
         return getEntriesFieldBuilder().getBuilder(index);
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public cn.larry.consensus.raft.proto.CommProtocolProto.LogEntryOrBuilder getEntriesOrBuilder(
@@ -3087,6 +3298,10 @@ public final class CommProtocolProto {
         }
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public java.util.List<? extends cn.larry.consensus.raft.proto.CommProtocolProto.LogEntryOrBuilder> 
@@ -3098,6 +3313,10 @@ public final class CommProtocolProto {
         }
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry.Builder addEntriesBuilder() {
@@ -3105,6 +3324,10 @@ public final class CommProtocolProto {
             cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry.getDefaultInstance());
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry.Builder addEntriesBuilder(
@@ -3113,6 +3336,10 @@ public final class CommProtocolProto {
             index, cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry.getDefaultInstance());
       }
       /**
+       * <pre>
+       *需存储的日志
+       * </pre>
+       *
        * <code>repeated .cn.larry.consensus.LogEntry entries = 7;</code>
        */
       public java.util.List<cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry.Builder> 
@@ -3191,11 +3418,19 @@ public final class CommProtocolProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * 当前的term
+     * </pre>
+     *
      * <code>uint64 term = 1;</code>
      */
     long getTerm();
 
     /**
+     * <pre>
+     *如果找到和preLogterm proLogIndex匹配的LogEntry则成功
+     * </pre>
+     *
      * <code>bool success = 2;</code>
      */
     boolean getSuccess();
@@ -3286,6 +3521,10 @@ public final class CommProtocolProto {
     public static final int TERM_FIELD_NUMBER = 1;
     private long term_;
     /**
+     * <pre>
+     * 当前的term
+     * </pre>
+     *
      * <code>uint64 term = 1;</code>
      */
     public long getTerm() {
@@ -3295,6 +3534,10 @@ public final class CommProtocolProto {
     public static final int SUCCESS_FIELD_NUMBER = 2;
     private boolean success_;
     /**
+     * <pre>
+     *如果找到和preLogterm proLogIndex匹配的LogEntry则成功
+     * </pre>
+     *
      * <code>bool success = 2;</code>
      */
     public boolean getSuccess() {
@@ -3625,12 +3868,20 @@ public final class CommProtocolProto {
 
       private long term_ ;
       /**
+       * <pre>
+       * 当前的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public long getTerm() {
         return term_;
       }
       /**
+       * <pre>
+       * 当前的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public Builder setTerm(long value) {
@@ -3640,6 +3891,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       * 当前的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public Builder clearTerm() {
@@ -3651,12 +3906,20 @@ public final class CommProtocolProto {
 
       private boolean success_ ;
       /**
+       * <pre>
+       *如果找到和preLogterm proLogIndex匹配的LogEntry则成功
+       * </pre>
+       *
        * <code>bool success = 2;</code>
        */
       public boolean getSuccess() {
         return success_;
       }
       /**
+       * <pre>
+       *如果找到和preLogterm proLogIndex匹配的LogEntry则成功
+       * </pre>
+       *
        * <code>bool success = 2;</code>
        */
       public Builder setSuccess(boolean value) {
@@ -3666,6 +3929,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *如果找到和preLogterm proLogIndex匹配的LogEntry则成功
+       * </pre>
+       *
        * <code>bool success = 2;</code>
        */
       public Builder clearSuccess() {
@@ -3732,21 +3999,37 @@ public final class CommProtocolProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     * 候选者的term
+     * </pre>
+     *
      * <code>uint64 term = 1;</code>
      */
     long getTerm();
 
     /**
+     * <pre>
+     *候选者id
+     * </pre>
+     *
      * <code>uint32 candidateId = 2;</code>
      */
     int getCandidateId();
 
     /**
+     * <pre>
+     *候选者的最后日志的index
+     * </pre>
+     *
      * <code>uint64 lastLogIndex = 3;</code>
      */
     long getLastLogIndex();
 
     /**
+     * <pre>
+     *候选者最后日志的term
+     * </pre>
+     *
      * <code>uint64 lastLogTerm = 4;</code>
      */
     long getLastLogTerm();
@@ -3849,6 +4132,10 @@ public final class CommProtocolProto {
     public static final int TERM_FIELD_NUMBER = 1;
     private long term_;
     /**
+     * <pre>
+     * 候选者的term
+     * </pre>
+     *
      * <code>uint64 term = 1;</code>
      */
     public long getTerm() {
@@ -3858,6 +4145,10 @@ public final class CommProtocolProto {
     public static final int CANDIDATEID_FIELD_NUMBER = 2;
     private int candidateId_;
     /**
+     * <pre>
+     *候选者id
+     * </pre>
+     *
      * <code>uint32 candidateId = 2;</code>
      */
     public int getCandidateId() {
@@ -3867,6 +4158,10 @@ public final class CommProtocolProto {
     public static final int LASTLOGINDEX_FIELD_NUMBER = 3;
     private long lastLogIndex_;
     /**
+     * <pre>
+     *候选者的最后日志的index
+     * </pre>
+     *
      * <code>uint64 lastLogIndex = 3;</code>
      */
     public long getLastLogIndex() {
@@ -3876,6 +4171,10 @@ public final class CommProtocolProto {
     public static final int LASTLOGTERM_FIELD_NUMBER = 4;
     private long lastLogTerm_;
     /**
+     * <pre>
+     *候选者最后日志的term
+     * </pre>
+     *
      * <code>uint64 lastLogTerm = 4;</code>
      */
     public long getLastLogTerm() {
@@ -4241,12 +4540,20 @@ public final class CommProtocolProto {
 
       private long term_ ;
       /**
+       * <pre>
+       * 候选者的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public long getTerm() {
         return term_;
       }
       /**
+       * <pre>
+       * 候选者的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public Builder setTerm(long value) {
@@ -4256,6 +4563,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       * 候选者的term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public Builder clearTerm() {
@@ -4267,12 +4578,20 @@ public final class CommProtocolProto {
 
       private int candidateId_ ;
       /**
+       * <pre>
+       *候选者id
+       * </pre>
+       *
        * <code>uint32 candidateId = 2;</code>
        */
       public int getCandidateId() {
         return candidateId_;
       }
       /**
+       * <pre>
+       *候选者id
+       * </pre>
+       *
        * <code>uint32 candidateId = 2;</code>
        */
       public Builder setCandidateId(int value) {
@@ -4282,6 +4601,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *候选者id
+       * </pre>
+       *
        * <code>uint32 candidateId = 2;</code>
        */
       public Builder clearCandidateId() {
@@ -4293,12 +4616,20 @@ public final class CommProtocolProto {
 
       private long lastLogIndex_ ;
       /**
+       * <pre>
+       *候选者的最后日志的index
+       * </pre>
+       *
        * <code>uint64 lastLogIndex = 3;</code>
        */
       public long getLastLogIndex() {
         return lastLogIndex_;
       }
       /**
+       * <pre>
+       *候选者的最后日志的index
+       * </pre>
+       *
        * <code>uint64 lastLogIndex = 3;</code>
        */
       public Builder setLastLogIndex(long value) {
@@ -4308,6 +4639,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *候选者的最后日志的index
+       * </pre>
+       *
        * <code>uint64 lastLogIndex = 3;</code>
        */
       public Builder clearLastLogIndex() {
@@ -4319,12 +4654,20 @@ public final class CommProtocolProto {
 
       private long lastLogTerm_ ;
       /**
+       * <pre>
+       *候选者最后日志的term
+       * </pre>
+       *
        * <code>uint64 lastLogTerm = 4;</code>
        */
       public long getLastLogTerm() {
         return lastLogTerm_;
       }
       /**
+       * <pre>
+       *候选者最后日志的term
+       * </pre>
+       *
        * <code>uint64 lastLogTerm = 4;</code>
        */
       public Builder setLastLogTerm(long value) {
@@ -4334,6 +4677,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *候选者最后日志的term
+       * </pre>
+       *
        * <code>uint64 lastLogTerm = 4;</code>
        */
       public Builder clearLastLogTerm() {
@@ -4400,11 +4747,19 @@ public final class CommProtocolProto {
       com.google.protobuf.MessageOrBuilder {
 
     /**
+     * <pre>
+     *当前term
+     * </pre>
+     *
      * <code>uint64 term = 1;</code>
      */
     long getTerm();
 
     /**
+     * <pre>
+     *是否投票支持
+     * </pre>
+     *
      * <code>bool voteGranted = 2;</code>
      */
     boolean getVoteGranted();
@@ -4495,6 +4850,10 @@ public final class CommProtocolProto {
     public static final int TERM_FIELD_NUMBER = 1;
     private long term_;
     /**
+     * <pre>
+     *当前term
+     * </pre>
+     *
      * <code>uint64 term = 1;</code>
      */
     public long getTerm() {
@@ -4504,6 +4863,10 @@ public final class CommProtocolProto {
     public static final int VOTEGRANTED_FIELD_NUMBER = 2;
     private boolean voteGranted_;
     /**
+     * <pre>
+     *是否投票支持
+     * </pre>
+     *
      * <code>bool voteGranted = 2;</code>
      */
     public boolean getVoteGranted() {
@@ -4834,12 +5197,20 @@ public final class CommProtocolProto {
 
       private long term_ ;
       /**
+       * <pre>
+       *当前term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public long getTerm() {
         return term_;
       }
       /**
+       * <pre>
+       *当前term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public Builder setTerm(long value) {
@@ -4849,6 +5220,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *当前term
+       * </pre>
+       *
        * <code>uint64 term = 1;</code>
        */
       public Builder clearTerm() {
@@ -4860,12 +5235,20 @@ public final class CommProtocolProto {
 
       private boolean voteGranted_ ;
       /**
+       * <pre>
+       *是否投票支持
+       * </pre>
+       *
        * <code>bool voteGranted = 2;</code>
        */
       public boolean getVoteGranted() {
         return voteGranted_;
       }
       /**
+       * <pre>
+       *是否投票支持
+       * </pre>
+       *
        * <code>bool voteGranted = 2;</code>
        */
       public Builder setVoteGranted(boolean value) {
@@ -4875,6 +5258,10 @@ public final class CommProtocolProto {
         return this;
       }
       /**
+       * <pre>
+       *是否投票支持
+       * </pre>
+       *
        * <code>bool voteGranted = 2;</code>
        */
       public Builder clearVoteGranted() {
@@ -5614,6 +6001,1369 @@ public final class CommProtocolProto {
 
   }
 
+  public interface ClientRequestOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:cn.larry.consensus.ClientRequest)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>string command = 1;</code>
+     */
+    java.lang.String getCommand();
+    /**
+     * <code>string command = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getCommandBytes();
+  }
+  /**
+   * Protobuf type {@code cn.larry.consensus.ClientRequest}
+   */
+  public  static final class ClientRequest extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:cn.larry.consensus.ClientRequest)
+      ClientRequestOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ClientRequest.newBuilder() to construct.
+    private ClientRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ClientRequest() {
+      command_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ClientRequest(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              command_ = s;
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientRequest_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientRequest_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest.class, cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest.Builder.class);
+    }
+
+    public static final int COMMAND_FIELD_NUMBER = 1;
+    private volatile java.lang.Object command_;
+    /**
+     * <code>string command = 1;</code>
+     */
+    public java.lang.String getCommand() {
+      java.lang.Object ref = command_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        command_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string command = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getCommandBytes() {
+      java.lang.Object ref = command_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        command_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getCommandBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, command_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getCommandBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, command_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest)) {
+        return super.equals(obj);
+      }
+      cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest other = (cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest) obj;
+
+      boolean result = true;
+      result = result && getCommand()
+          .equals(other.getCommand());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + COMMAND_FIELD_NUMBER;
+      hash = (53 * hash) + getCommand().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code cn.larry.consensus.ClientRequest}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.larry.consensus.ClientRequest)
+        cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequestOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientRequest_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientRequest_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest.class, cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest.Builder.class);
+      }
+
+      // Construct using cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        command_ = "";
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientRequest_descriptor;
+      }
+
+      @java.lang.Override
+      public cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest getDefaultInstanceForType() {
+        return cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest build() {
+        cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest buildPartial() {
+        cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest result = new cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest(this);
+        result.command_ = command_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest) {
+          return mergeFrom((cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest other) {
+        if (other == cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest.getDefaultInstance()) return this;
+        if (!other.getCommand().isEmpty()) {
+          command_ = other.command_;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object command_ = "";
+      /**
+       * <code>string command = 1;</code>
+       */
+      public java.lang.String getCommand() {
+        java.lang.Object ref = command_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          command_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string command = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getCommandBytes() {
+        java.lang.Object ref = command_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          command_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string command = 1;</code>
+       */
+      public Builder setCommand(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        command_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string command = 1;</code>
+       */
+      public Builder clearCommand() {
+        
+        command_ = getDefaultInstance().getCommand();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string command = 1;</code>
+       */
+      public Builder setCommandBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        command_ = value;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:cn.larry.consensus.ClientRequest)
+    }
+
+    // @@protoc_insertion_point(class_scope:cn.larry.consensus.ClientRequest)
+    private static final cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest();
+    }
+
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ClientRequest>
+        PARSER = new com.google.protobuf.AbstractParser<ClientRequest>() {
+      @java.lang.Override
+      public ClientRequest parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ClientRequest(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ClientRequest> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ClientRequest> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public cn.larry.consensus.raft.proto.CommProtocolProto.ClientRequest getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
+  public interface ClientResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:cn.larry.consensus.ClientResponse)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>uint32 retcode = 1;</code>
+     */
+    int getRetcode();
+
+    /**
+     * <code>string msg = 2;</code>
+     */
+    java.lang.String getMsg();
+    /**
+     * <code>string msg = 2;</code>
+     */
+    com.google.protobuf.ByteString
+        getMsgBytes();
+
+    /**
+     * <code>string leader = 3;</code>
+     */
+    java.lang.String getLeader();
+    /**
+     * <code>string leader = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getLeaderBytes();
+
+    /**
+     * <code>uint32 leaderPort = 4;</code>
+     */
+    int getLeaderPort();
+  }
+  /**
+   * Protobuf type {@code cn.larry.consensus.ClientResponse}
+   */
+  public  static final class ClientResponse extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:cn.larry.consensus.ClientResponse)
+      ClientResponseOrBuilder {
+  private static final long serialVersionUID = 0L;
+    // Use ClientResponse.newBuilder() to construct.
+    private ClientResponse(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private ClientResponse() {
+      retcode_ = 0;
+      msg_ = "";
+      leader_ = "";
+      leaderPort_ = 0;
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ClientResponse(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 8: {
+
+              retcode_ = input.readUInt32();
+              break;
+            }
+            case 18: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              msg_ = s;
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              leader_ = s;
+              break;
+            }
+            case 32: {
+
+              leaderPort_ = input.readUInt32();
+              break;
+            }
+            default: {
+              if (!parseUnknownFieldProto3(
+                  input, unknownFields, extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientResponse_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientResponse_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse.class, cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse.Builder.class);
+    }
+
+    public static final int RETCODE_FIELD_NUMBER = 1;
+    private int retcode_;
+    /**
+     * <code>uint32 retcode = 1;</code>
+     */
+    public int getRetcode() {
+      return retcode_;
+    }
+
+    public static final int MSG_FIELD_NUMBER = 2;
+    private volatile java.lang.Object msg_;
+    /**
+     * <code>string msg = 2;</code>
+     */
+    public java.lang.String getMsg() {
+      java.lang.Object ref = msg_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        msg_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string msg = 2;</code>
+     */
+    public com.google.protobuf.ByteString
+        getMsgBytes() {
+      java.lang.Object ref = msg_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        msg_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int LEADER_FIELD_NUMBER = 3;
+    private volatile java.lang.Object leader_;
+    /**
+     * <code>string leader = 3;</code>
+     */
+    public java.lang.String getLeader() {
+      java.lang.Object ref = leader_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        leader_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string leader = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getLeaderBytes() {
+      java.lang.Object ref = leader_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        leader_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int LEADERPORT_FIELD_NUMBER = 4;
+    private int leaderPort_;
+    /**
+     * <code>uint32 leaderPort = 4;</code>
+     */
+    public int getLeaderPort() {
+      return leaderPort_;
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (retcode_ != 0) {
+        output.writeUInt32(1, retcode_);
+      }
+      if (!getMsgBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, msg_);
+      }
+      if (!getLeaderBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, leader_);
+      }
+      if (leaderPort_ != 0) {
+        output.writeUInt32(4, leaderPort_);
+      }
+      unknownFields.writeTo(output);
+    }
+
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (retcode_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(1, retcode_);
+      }
+      if (!getMsgBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, msg_);
+      }
+      if (!getLeaderBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, leader_);
+      }
+      if (leaderPort_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeUInt32Size(4, leaderPort_);
+      }
+      size += unknownFields.getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse)) {
+        return super.equals(obj);
+      }
+      cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse other = (cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse) obj;
+
+      boolean result = true;
+      result = result && (getRetcode()
+          == other.getRetcode());
+      result = result && getMsg()
+          .equals(other.getMsg());
+      result = result && getLeader()
+          .equals(other.getLeader());
+      result = result && (getLeaderPort()
+          == other.getLeaderPort());
+      result = result && unknownFields.equals(other.unknownFields);
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      hash = (37 * hash) + RETCODE_FIELD_NUMBER;
+      hash = (53 * hash) + getRetcode();
+      hash = (37 * hash) + MSG_FIELD_NUMBER;
+      hash = (53 * hash) + getMsg().hashCode();
+      hash = (37 * hash) + LEADER_FIELD_NUMBER;
+      hash = (53 * hash) + getLeader().hashCode();
+      hash = (37 * hash) + LEADERPORT_FIELD_NUMBER;
+      hash = (53 * hash) + getLeaderPort();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code cn.larry.consensus.ClientResponse}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:cn.larry.consensus.ClientResponse)
+        cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponseOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientResponse_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientResponse_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse.class, cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse.Builder.class);
+      }
+
+      // Construct using cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        retcode_ = 0;
+
+        msg_ = "";
+
+        leader_ = "";
+
+        leaderPort_ = 0;
+
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return cn.larry.consensus.raft.proto.CommProtocolProto.internal_static_cn_larry_consensus_ClientResponse_descriptor;
+      }
+
+      @java.lang.Override
+      public cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse getDefaultInstanceForType() {
+        return cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse build() {
+        cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse buildPartial() {
+        cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse result = new cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse(this);
+        result.retcode_ = retcode_;
+        result.msg_ = msg_;
+        result.leader_ = leader_;
+        result.leaderPort_ = leaderPort_;
+        onBuilt();
+        return result;
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      @java.lang.Override
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      @java.lang.Override
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, java.lang.Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          java.lang.Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse) {
+          return mergeFrom((cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse other) {
+        if (other == cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse.getDefaultInstance()) return this;
+        if (other.getRetcode() != 0) {
+          setRetcode(other.getRetcode());
+        }
+        if (!other.getMsg().isEmpty()) {
+          msg_ = other.msg_;
+          onChanged();
+        }
+        if (!other.getLeader().isEmpty()) {
+          leader_ = other.leader_;
+          onChanged();
+        }
+        if (other.getLeaderPort() != 0) {
+          setLeaderPort(other.getLeaderPort());
+        }
+        this.mergeUnknownFields(other.unknownFields);
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private int retcode_ ;
+      /**
+       * <code>uint32 retcode = 1;</code>
+       */
+      public int getRetcode() {
+        return retcode_;
+      }
+      /**
+       * <code>uint32 retcode = 1;</code>
+       */
+      public Builder setRetcode(int value) {
+        
+        retcode_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 retcode = 1;</code>
+       */
+      public Builder clearRetcode() {
+        
+        retcode_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object msg_ = "";
+      /**
+       * <code>string msg = 2;</code>
+       */
+      public java.lang.String getMsg() {
+        java.lang.Object ref = msg_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          msg_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string msg = 2;</code>
+       */
+      public com.google.protobuf.ByteString
+          getMsgBytes() {
+        java.lang.Object ref = msg_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          msg_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string msg = 2;</code>
+       */
+      public Builder setMsg(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        msg_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string msg = 2;</code>
+       */
+      public Builder clearMsg() {
+        
+        msg_ = getDefaultInstance().getMsg();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string msg = 2;</code>
+       */
+      public Builder setMsgBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        msg_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object leader_ = "";
+      /**
+       * <code>string leader = 3;</code>
+       */
+      public java.lang.String getLeader() {
+        java.lang.Object ref = leader_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          leader_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string leader = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getLeaderBytes() {
+        java.lang.Object ref = leader_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          leader_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string leader = 3;</code>
+       */
+      public Builder setLeader(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        leader_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string leader = 3;</code>
+       */
+      public Builder clearLeader() {
+        
+        leader_ = getDefaultInstance().getLeader();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string leader = 3;</code>
+       */
+      public Builder setLeaderBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        leader_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int leaderPort_ ;
+      /**
+       * <code>uint32 leaderPort = 4;</code>
+       */
+      public int getLeaderPort() {
+        return leaderPort_;
+      }
+      /**
+       * <code>uint32 leaderPort = 4;</code>
+       */
+      public Builder setLeaderPort(int value) {
+        
+        leaderPort_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>uint32 leaderPort = 4;</code>
+       */
+      public Builder clearLeaderPort() {
+        
+        leaderPort_ = 0;
+        onChanged();
+        return this;
+      }
+      @java.lang.Override
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.setUnknownFieldsProto3(unknownFields);
+      }
+
+      @java.lang.Override
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return super.mergeUnknownFields(unknownFields);
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:cn.larry.consensus.ClientResponse)
+    }
+
+    // @@protoc_insertion_point(class_scope:cn.larry.consensus.ClientResponse)
+    private static final cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse();
+    }
+
+    public static cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<ClientResponse>
+        PARSER = new com.google.protobuf.AbstractParser<ClientResponse>() {
+      @java.lang.Override
+      public ClientResponse parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ClientResponse(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<ClientResponse> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ClientResponse> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public cn.larry.consensus.raft.proto.CommProtocolProto.ClientResponse getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_cn_larry_consensus_CommonRequest_descriptor;
   private static final 
@@ -5649,6 +7399,16 @@ public final class CommProtocolProto {
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_cn_larry_consensus_LogEntry_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cn_larry_consensus_ClientRequest_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cn_larry_consensus_ClientRequest_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_cn_larry_consensus_ClientResponse_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_cn_larry_consensus_ClientResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -5674,14 +7434,17 @@ public final class CommProtocolProto {
       "\r\022\024\n\014lastLogIndex\030\003 \001(\004\022\023\n\013lastLogTerm\030\004" +
       " \001(\004\"3\n\016RequestVoteRsp\022\014\n\004term\030\001 \001(\004\022\023\n\013" +
       "voteGranted\030\002 \001(\010\"8\n\010LogEntry\022\014\n\004term\030\001 " +
-      "\001(\004\022\r\n\005index\030\002 \001(\004\022\017\n\007command\030\003 \001(\t*\301\001\n\010" +
-      "MSG_TYPE\022\t\n\005EMPTY\020\000\022\020\n\014APPEND_ENTRY\020\001\022\024\n" +
-      "\020APPEND_ENTRY_RSP\020\002\022\020\n\014REQUEST_VOTE\020\003\022\024\n" +
-      "\020REQUEST_VOTE_RSP\020\004\022\022\n\016CLIENT_REQUEST\020\005\022" +
-      "\026\n\022CLIENT_REQUEST_RSP\020\006\022\024\n\020INSTALL_SNAPS" +
-      "HOT\020\007\022\030\n\024INSTALL_SNAPSHOT_RSP\020\010B2\n\035cn.la" +
-      "rry.consensus.raft.protoB\021CommProtocolPr" +
-      "otob\006proto3"
+      "\001(\004\022\r\n\005index\030\002 \001(\004\022\017\n\007command\030\003 \001(\t\" \n\rC" +
+      "lientRequest\022\017\n\007command\030\001 \001(\t\"R\n\016ClientR" +
+      "esponse\022\017\n\007retcode\030\001 \001(\r\022\013\n\003msg\030\002 \001(\t\022\016\n" +
+      "\006leader\030\003 \001(\t\022\022\n\nleaderPort\030\004 \001(\r*\301\001\n\010MS" +
+      "G_TYPE\022\t\n\005EMPTY\020\000\022\020\n\014APPEND_ENTRY\020\001\022\024\n\020A" +
+      "PPEND_ENTRY_RSP\020\002\022\020\n\014REQUEST_VOTE\020\003\022\024\n\020R" +
+      "EQUEST_VOTE_RSP\020\004\022\022\n\016CLIENT_REQUEST\020\005\022\026\n" +
+      "\022CLIENT_REQUEST_RSP\020\006\022\024\n\020INSTALL_SNAPSHO" +
+      "T\020\007\022\030\n\024INSTALL_SNAPSHOT_RSP\020\010B2\n\035cn.larr" +
+      "y.consensus.raft.protoB\021CommProtocolProt" +
+      "ob\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5737,6 +7500,18 @@ public final class CommProtocolProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_cn_larry_consensus_LogEntry_descriptor,
         new java.lang.String[] { "Term", "Index", "Command", });
+    internal_static_cn_larry_consensus_ClientRequest_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_cn_larry_consensus_ClientRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cn_larry_consensus_ClientRequest_descriptor,
+        new java.lang.String[] { "Command", });
+    internal_static_cn_larry_consensus_ClientResponse_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_cn_larry_consensus_ClientResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_cn_larry_consensus_ClientResponse_descriptor,
+        new java.lang.String[] { "Retcode", "Msg", "Leader", "LeaderPort", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

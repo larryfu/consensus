@@ -1,7 +1,5 @@
 package cn.larry.consensus.raft;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Starter1 {
 

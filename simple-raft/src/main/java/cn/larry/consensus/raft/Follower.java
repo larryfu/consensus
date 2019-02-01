@@ -22,6 +22,7 @@ public class Follower {
     private static ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
 
+
     public void init() {
         this.lastLeaderMsg = System.currentTimeMillis();
         scheduledExecutorService.schedule(new Runnable() {
@@ -43,6 +44,7 @@ public class Follower {
     private void checkLeaderTimeout() {
         if (serverState.isFollower()) {
             if (System.currentTimeMillis() - lastLeaderMsg > timeoutSeconds * 1000) {
+                logger.error("leader time out convert to candidate");
                 serverState.putMessage(new ConvertStatusMsg(RaftAlgorithm.ServerStatus.CANDIDATE), null);
             } else {
                 scheduledExecutorService.schedule(new Runnable() {
@@ -54,6 +56,12 @@ public class Follower {
         }
     }
 
+    public void onConvertStatus(ConvertStatusMsg convertStatusMsg){
+        if(convertStatusMsg.getNewStatus().equalsIgnoreCase(RaftAlgorithm.ServerStatus.CANDIDATE)){
+            serverState.convertToCandidate();
+        }
+    }
+
 
     /**
      * follower处理AppendEntry消息
@@ -62,6 +70,7 @@ public class Follower {
      * @return
      */
     public AppendEntryRsp onAppendEntry(AppendEntry appendEntry) {
+        logger.debug("follower handle  append entry:{}" ,appendEntry);
         if (serverState.getCurrentTerm() > appendEntry.getTerm()) { //leader已过时
             return new AppendEntryRsp(serverState.getCurrentTerm(), false, appendEntry);
         }
@@ -69,19 +78,35 @@ public class Follower {
         if (serverState.getCurrentTerm() < appendEntry.getTerm()) { //更新当前term
             serverState.setCurrentTerm(appendEntry.getTerm());
         }
-        if (appendEntry.getLeaderCommit() == 0) { //leader还没有提交日志
+
+        //没有日志，是heartbeat
+        if(appendEntry.getEntries()==null || appendEntry.getEntries().size()==0){
             return new AppendEntryRsp(serverState.getCurrentTerm(), true, appendEntry);
         }
+
         if (appendEntry.getPreLogIndex() == 0) { //
+            logger.debug("pre log index is 0 execute all replace");
             serverState.applyLog(appendEntry);
             return new AppendEntryRsp(serverState.getCurrentTerm(), true, appendEntry);
         }
         CommProtocolProto.LogEntry logEntry = serverState.getLogs().getLogEntry(appendEntry.getPreLogIndex());
         if (logEntry == null || logEntry.getTerm() != appendEntry.getPreLogTerm()) { //没有找到preloginex的日志，或者与leader的不匹配
+            logger.debug("can not find pre index log ");
             return new AppendEntryRsp(serverState.getCurrentTerm(), false, appendEntry);
         }
         serverState.applyLog(appendEntry);
+
         return new AppendEntryRsp(serverState.getCurrentTerm(), true, appendEntry);
+    }
+
+    public ClientRsp onClientRequest(ClientRequest request){
+        ClientRsp rsp = new ClientRsp();
+        rsp.setMsg("please send req to leader");
+        rsp.setRetCode(-10000);
+        ServerInfo info = serverState.getLeaderInfo();
+        rsp.setLeader(info.getServerName());
+        rsp.setLeaderPort(info.getPort());
+        return rsp;
     }
 
     /**

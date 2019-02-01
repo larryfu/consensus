@@ -19,7 +19,7 @@ public class ClientTest {
         reqBuilder.setServerIp("127.0.0.1");
         reqBuilder.setMsgType(1000);
         reqBuilder.setVersion(1000);
-        CommProtocolProto.CommonResponse response = client.sendSync("127.0.0.1",8080,reqBuilder.build(),null);
+        CommProtocolProto.CommonResponse response = client.sendSync("127.0.0.1",8080,reqBuilder,null);
         logger.error("response:{}", response);
 
     }

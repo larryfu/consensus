@@ -48,6 +48,12 @@ public class RaftAlgorithm implements Runnable {
      */
     private ConcurrentHashMap<String, Consumer<Object>> msgCallBack = new ConcurrentHashMap<>();
 
+    public ConcurrentHashMap<String, Consumer<Object>> getClientMsgCallBack() {
+        return clientMsgCallBack;
+    }
+
+    private ConcurrentHashMap<String, Consumer<Object>> clientMsgCallBack = new ConcurrentHashMap<>();
+
     public ConcurrentHashMap<String, Consumer<Object>> getMsgCallBack() {
         return msgCallBack;
     }
@@ -56,11 +62,36 @@ public class RaftAlgorithm implements Runnable {
         this.msgCallBack = msgCallBack;
     }
 
+    public ServerInfo getLeaderInfo(){
+        for(ServerInfo info:getClusterServers())
+            if(info.getServerId() == currentLeader)
+                return info;
+        return null;
+    }
+
     public void putMessage(Msg msg, Consumer callback) {
         if (callback != null)
             msgCallBack.put(msg.getMsgId(), callback);
         msgQueue.offer(msg);
     }
+
+    public void putClientMessage(Msg msg, Consumer callback) {
+        logger.error("receive client req is leader:{}",isLeader());
+        if(!isLeader()){
+            ClientRsp rsp = new ClientRsp();
+            rsp.setRetCode(-1000);
+            rsp.setMsg("please send req to leader");
+            rsp.setLeader(getLeaderInfo().getServerName());
+            rsp.setLeaderPort(getLeaderInfo().getPort());
+            if(callback!=null)
+            callback.accept(rsp);
+        }else {
+            if (callback != null)
+                clientMsgCallBack.put(msg.getMsgId(), callback);
+            msgQueue.offer(msg);
+        }
+    }
+
 
 
     public void run() {
@@ -81,6 +112,7 @@ public class RaftAlgorithm implements Runnable {
                 } else {
 
                 }
+
                 Consumer<Object> consumer = msgCallBack.get(msg.getMsgId());
                 if (consumer != null)
                     consumer.accept(result);
@@ -133,7 +165,11 @@ public class RaftAlgorithm implements Runnable {
             rsp = getFollower().onAppendEntry((AppendEntry) msg);
         } else if (msg instanceof RequestVote) {
             rsp = getFollower().onRequestVote((RequestVote) msg);
-        } else {
+        } else if(msg instanceof ConvertStatusMsg) {
+            getFollower().onConvertStatus((ConvertStatusMsg )msg);
+        }else if(msg instanceof ClientRequest ) {
+            getFollower().onClientRequest( (ClientRequest)msg);
+        }else {
             logger.error("follower can not handle message ignore , " + msg.getClass().getCanonicalName());
         }
         //TODO complete logic
@@ -150,7 +186,7 @@ public class RaftAlgorithm implements Runnable {
             leader.onAppendEntryRsp((AppendEntryRsp) msg);
             return null;
         } else if (msg instanceof ClientRequest) {
-            leader.onClientRequest((ClientRequest) msg);
+             leader.onClientRequest((ClientRequest) msg);
         } else {
             logger.error("leader can not handle msg:{}", msg);
         }
@@ -174,8 +210,10 @@ public class RaftAlgorithm implements Runnable {
 
     public void applyLog(AppendEntry appendEntry) {
 
+        logger.debug("append entry log size:{} first:{}",appendEntry.getEntries().size(),appendEntry.getEntries().get(0).toString());
         if (appendEntry.getPreLogIndex() == 0) {  // preLogIndex 为0 执行全量替换
             logs.getLogEntries().clear();
+
         }else {
             int appendStart = 0;
             for (int i = 0; i < logs.getLogEntries().size(); i++) { //找到匹配位置
@@ -184,13 +222,15 @@ public class RaftAlgorithm implements Runnable {
                 }
             }
             //移除掉匹配位置后的日志
-            for (int index = logs.getLogEntries().size(); index > appendStart; index--) {
+            for (int index = logs.getLogEntries().size()-1; index > appendStart; index--) {
                 logs.getLogEntries().remove(index);
             }
         }
         //添加leader的日志
         logs.getLogEntries().addAll(appendEntry.getEntries());
         commitIndex = Math.min(appendEntry.getLeaderCommit(), logs.getLastLogindex());
+        logger.debug("current log size:{} last log:{}",logs.getLogEntries().size() ,logs.getLastEntry().toString());
+        logger.debug("commit index :{}",commitIndex);
     }
 
     public boolean isLeader() {
@@ -207,7 +247,7 @@ public class RaftAlgorithm implements Runnable {
 
 
     public void convertToFollower(long term, int leader) {
-        logger.debug("convert to follower cur stat:{}", getCurrentState());
+        logger.debug("convert to follower cur stat:{} leader:{} ", getCurrentState(),leader);
         if (term < currentTerm)
             return;
         currentTerm = term;
@@ -224,6 +264,7 @@ public class RaftAlgorithm implements Runnable {
         logger.debug("convert to leader cur stat:{}", getCurrentState());
         this.currentState = ServerStatus.LEADER;
         this.thisServer.setState(ServerStatus.LEADER);
+        this.currentLeader = thisServer.getServerId();
         this.leader.init();
     }
 

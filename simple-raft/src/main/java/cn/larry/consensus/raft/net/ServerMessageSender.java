@@ -38,7 +38,7 @@ public class ServerMessageSender implements MessageSender {
             public void run() {
                 CommonRequest request = buildRequest(msg);
                 try {
-                    CommProtocolProto.CommonResponse response = client.sendSync(host, port, request, null);
+                    CommProtocolProto.CommonResponse response = client.sendSync(host, port, request.toBuilder(), null);
                     Msg rspMsg = extractResponse(response, msg);
                     callback.accept(rspMsg);
                 } catch (Exception e) {

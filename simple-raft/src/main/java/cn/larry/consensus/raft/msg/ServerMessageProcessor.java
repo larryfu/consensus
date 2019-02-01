@@ -66,6 +66,19 @@ public class ServerMessageProcessor implements CommMessageProcessor {
                     rspBuilder.setMsg("ok");
                     rspBuilder.setBody(rsp.toByteString());
                 }
+            }else  if(request.getMsgType() == MSG_TYPE.CLIENT_REQUEST_VALUE) {
+                CommProtocolProto.ClientRequest request1 = CommProtocolProto.ClientRequest.parseFrom(request.getBody());
+                CommProtocolProto.ClientResponse rsp = processClientRequest(request1, fromAddress);
+                rspBuilder.setMsgType(MSG_TYPE.CLIENT_REQUEST_RSP_VALUE);
+                if (rsp == null) {
+                    rspBuilder.setCode(10003);
+                    rspBuilder.setMsg("process msg error");
+                    return rspBuilder.build();
+                } else {
+                    rspBuilder.setCode(0);
+                    rspBuilder.setMsg("ok");
+                    rspBuilder.setBody(rsp.toByteString());
+                }
             }else {
                 logger.error("can not handle msg type:{}",request.getMsgType());
             }
@@ -81,6 +94,39 @@ public class ServerMessageProcessor implements CommMessageProcessor {
             rspBuilder.setMsg(e.getMessage());
             return rspBuilder.build();
         }
+    }
+
+    public CommProtocolProto.ClientResponse processClientRequest(CommProtocolProto.ClientRequest request,InetSocketAddress fromAddress) throws InterruptedException{
+        ClientRequest req = new ClientRequest();
+        req.setCommand(request.getCommand());
+        String ip = fromAddress.getAddress().getHostAddress();
+        String from = ip + ":" + fromAddress.getPort();
+        req.setFrom(from);
+        final CountDownLatch latch = new CountDownLatch(1);
+        raftAlgorithm.putClientMessage(req, new Consumer() {
+            @Override
+            public void accept(Object o) {
+                logger.debug("msgId:{} object:{}",req.msgId,o);
+                processResult.put(req.msgId, o);
+                latch.countDown();
+            }
+        });
+        boolean result = latch.await(10, TimeUnit.SECONDS);
+        if (!result) {
+            logger.error("wait process result time out msgid:{}", req.msgId);
+        }
+        Object obj = processResult.remove(req.msgId);
+        if (obj instanceof ClientRsp) {
+            ClientRsp rsp = (ClientRsp)obj;
+           CommProtocolProto.ClientResponse.Builder builder = CommProtocolProto.ClientResponse.newBuilder();
+           builder.setRetcode(rsp.retCode);
+           builder.setLeader(rsp.leader);
+           builder.setLeaderPort(rsp.leaderPort);
+           builder.setMsg(rsp.msg);
+           return builder.build();
+        }
+        logger.error("process result invalid msgid:{} result:{}", obj);
+        return null;
     }
 
 
@@ -117,6 +163,7 @@ public class ServerMessageProcessor implements CommMessageProcessor {
         logger.error("process result invalid msgid:{} result:{}", obj);
         return null;
     }
+
 
     private CommProtocolProto.AppendEntryRsp processAppendEntry(CommProtocolProto.AppendEntryReq req, InetSocketAddress fromAddress) throws InterruptedException {
         AppendEntry appendEntry = new AppendEntry();

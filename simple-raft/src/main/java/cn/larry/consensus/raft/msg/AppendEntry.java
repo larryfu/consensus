@@ -73,4 +73,6 @@ public class AppendEntry extends Msg {
     public void setLeaderCommit(long leaderCommit) {
         this.leaderCommit = leaderCommit;
     }
+
+
 }

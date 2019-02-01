@@ -23,6 +23,8 @@ import java.util.function.Consumer;
 public class TCPIOClient extends SimpleChannelInboundHandler<CommProtocolProto.CommonResponse> {
 
 
+    private static AtomicInteger seqGenerator = new AtomicInteger();
+
     private Bootstrap bootstrap;
 
     private CallbackMessageHandler messageHandler;
@@ -58,8 +60,9 @@ public class TCPIOClient extends SimpleChannelInboundHandler<CommProtocolProto.C
     }
 
 
-    public CommProtocolProto.CommonResponse sendSync(String ip, int port, CommProtocolProto.CommonRequest request, ChannelFutureListener listener) throws InterruptedException {
+    public CommProtocolProto.CommonResponse sendSync(String ip, int port, CommProtocolProto.CommonRequest.Builder request, ChannelFutureListener listener) throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
+        request.setSeq(seqGenerator.incrementAndGet());
         messageHandler.putCallback(request.getSeq(), new Consumer<CommProtocolProto.CommonResponse>() {
             @Override
             public void accept(CommProtocolProto.CommonResponse response) {
@@ -70,7 +73,7 @@ public class TCPIOClient extends SimpleChannelInboundHandler<CommProtocolProto.C
         });
         RouterInfo routerInfo = new RouterInfo(ip, port, null);
         Channel channel = getChannel(routerInfo);
-       ChannelFuture future = channel.writeAndFlush(request);
+       ChannelFuture future = channel.writeAndFlush(request.build());
         if (listener != null)
             future.addListener(listener);
         boolean result = latch.await(5, TimeUnit.SECONDS);

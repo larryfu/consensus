@@ -3,6 +3,7 @@ package cn.larry.consensus.raft;
 
 import cn.larry.consensus.raft.msg.*;
 import cn.larry.consensus.raft.proto.CommProtocolProto.LogEntry;
+import cn.larry.consensus.raft.util.JSONUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -89,6 +90,7 @@ public class Leader {
 
     private void sendAppendEntryToFollower(ServerInfo serverInfo) {
         //本机,无需发送
+        logger.debug("send  AppendEntry To Follower :{} ",serverInfo.getServerId());
         if (serverInfo.getServerId() == serverState.getThisServer().getServerId())
             return;
         //向follower发送log entry
@@ -96,9 +98,11 @@ public class Leader {
         AppendEntry appendEntry = new AppendEntry();
         Long nextIndex = nextIndexMap.get(serverInfo.getServerId());
         if (matchIndex == null) { //没有匹配记录,leader和follower第一次同步日志
-            matchIndex = serverState.getLogs().getLastLogindex();
+            long lastLogindex = serverState.getLogs().getLastLogindex();
+            matchIndex = lastLogindex>0?lastLogindex-1:lastLogindex;
             nextIndex = matchIndex + 1;
         }
+        logger.debug("match index :{} next index:{}",matchIndex,nextIndex);
         LogEntry preEntry = serverState.getLogs().getLogEntry(matchIndex);
         if(preEntry == null){ //找不到pre logEntry设置为0，
             appendEntry.setPreLogTerm(0L);
@@ -108,6 +112,7 @@ public class Leader {
             appendEntry.setPreLogIndex(preEntry.getIndex());
         }
 
+        logger.debug("append entry :{}",appendEntry);
         appendEntry.setTo(serverInfo.getServerName());
         appendEntry.setFrom(serverState.getThisServer().getServerName());
         appendEntry.setTerm(serverState.currentTerm);
@@ -115,6 +120,10 @@ public class Leader {
         appendEntry.setLeaderCommit(serverState.getCommitIndex());
         List<LogEntry> entries = serverState.getLogs().getLogByRange(nextIndex, serverState.getLogs().getLastLogindex());
         appendEntry.setEntries(entries);
+        logger.debug("send msg to follower :{} logs:{}", JSONUtil.toJson(appendEntry),appendEntry.getEntries().size());
+        if(appendEntry.getEntries()!=null && appendEntry.getEntries().size()>0){
+            logger.debug("los size:{} first log:{}",appendEntry.getEntries().size(),appendEntry.getEntries().get(0).toString());
+        }
         serverState.sendMessage(appendEntry);
     }
 
@@ -134,18 +143,26 @@ public class Leader {
             sendAppendEntryToFollower(serverInfo);
         }
         logCallBacks.putIfAbsent(entry.getIndex(), new ArrayList<>());
+        ClientRsp rsp = new ClientRsp();
+        ServerInfo info = serverState.getLeaderInfo();
+        rsp.setRetCode(0);
+        rsp.setMsg("ok");
+        rsp.setLeader(info.getServerName());
+        rsp.setLeaderPort(info.getPort());
         logCallBacks.get(entry.getIndex()).add(new Runnable() {
             @Override
             public void run() {
-                Consumer runnable = serverState.getMsgCallBack().remove(request.getMsgId());
+                Consumer runnable = serverState.getClientMsgCallBack().remove(request.getMsgId());
                 if (runnable != null) {
+                    logger.debug("process ");
                     /**
                      * 客户端请求处理成功，回调回复客户端
                      */
-                    runnable.accept(null);
+                    runnable.accept(rsp);
                 }
             }
         });
+        //return rsp;
     }
 
     /**
@@ -156,6 +173,7 @@ public class Leader {
      * @param rsp
      */
     public Msg onAppendEntryRsp(AppendEntryRsp rsp) {
+        logger.debug("on AppendEntryRsp :{}",rsp);
         ServerInfo fromServer = null;
         for (ServerInfo server : serverState.getClusterServers()) {
             if (server.getServerName().equals(rsp.getFrom())) {
@@ -164,6 +182,7 @@ public class Leader {
         }
 
         if (fromServer == null) { // 无法找到来源serve信息，忽略
+            logger.error("can not find from server :{}",rsp.getFrom());
             return null;
         }
         heartbeatMap.put(fromServer.getServerId(), System.currentTimeMillis());
@@ -171,12 +190,14 @@ public class Leader {
         if (rsp.isSuccess()) { //appendEntry成功
             if (rsp.getRequest().getEntries().size() > 0) {  //非心跳，有复制log，更新Follower状态
                 Long matchIndex = rsp.getRequest().getEntries().get(rsp.getRequest().getEntries().size() - 1).getIndex();
+                logger.debug("server :{} match index:{}",fromServer.getServerName(),matchIndex);
                 matchIndexMap.put(fromServer.getServerId(), matchIndex);
                 nextIndexMap.put(fromServer.getServerId(), matchIndex + 1);
                 updateCommit();
             }
             return null;
         } else { //append entry 失败，回退prelogIndex然后重试
+            logger.debug("append entry fail move back ");
             AppendEntry appendEntry = new AppendEntry();
             appendEntry.setFrom(serverState.getThisServer().getServerName());
             appendEntry.setTo(fromServer.getServerName());
@@ -202,6 +223,8 @@ public class Leader {
                 appendEntry.getEntries().add(entry);
             }
             appendEntry.getEntries().addAll(rsp.getRequest().getEntries());
+            logger.debug("new append entry log size:{}",appendEntry.getEntries().size());
+            serverState.sendMessage(appendEntry);
             return appendEntry;
         }
     }
@@ -217,6 +240,7 @@ public class Leader {
         Collections.sort(matchIndexs);
         //将已复制的log index排序后刚好在一半前的那个位置的log index是commitIndex 如果数组长度是奇数则是(n-1)/2，数组长度是偶数则是n/2-1
         long commitIndex = matchIndexs.get((int) (Math.ceil((double) matchIndexs.size() / 2) - 1));
+        logger.debug("pre commit :{} current commit:{} ",serverState.commitIndex,commitIndex);
         if (commitIndex > serverState.commitIndex) {
             long originIndex = serverState.getCommitIndex();
             serverState.commitIndex = commitIndex;

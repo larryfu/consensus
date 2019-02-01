@@ -32,9 +32,16 @@ public class Logs {
     public long getLastLogindex() {
         LogEntry entry = getLastEntry();
         if(entry == null){
-            return 0L;
+            return startIndex;
         }
         return entry.getIndex();
+    }
+    public long getLastLogTerm(){
+        LogEntry entry = getLastEntry();
+        if(entry == null){
+            return startTerm;
+        }
+        return entry.getTerm();
     }
 
     public LogEntry getLogEntry(long index) {
@@ -68,7 +75,7 @@ public class Logs {
                     break;
             }
         }
-        return logEntries;
+        return entries;
     }
 
     public LogEntry getPreLogEntry(long index) {

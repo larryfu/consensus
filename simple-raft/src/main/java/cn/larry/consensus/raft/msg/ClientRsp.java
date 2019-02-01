@@ -5,6 +5,24 @@ public class ClientRsp extends Msg {
     int retCode;
     String msg;
     Object value;
+    String leader;
+    int leaderPort;
+
+    public String getLeader() {
+        return leader;
+    }
+
+    public void setLeader(String leader) {
+        this.leader = leader;
+    }
+
+    public int getLeaderPort() {
+        return leaderPort;
+    }
+
+    public void setLeaderPort(int leaderPort) {
+        this.leaderPort = leaderPort;
+    }
 
     public int getRetCode() {
         return retCode;
